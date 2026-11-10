@@ -65,26 +65,41 @@ func twoSum(nums []int, target int) []int {
 	return nil
 }
 
-func countWords1(words []string) map[string]int {
-	m := make(map[string]int)
-	for _, word := range words {
-		m[word]++
-	}
-	return m
+type Book struct {
+	Title  string
+	Author string
+	Year   int
+	Pages  int
 }
 
-func twoSum1(nums []int, target int) []int {
-	m := make(map[int]int)
-	for i, num := range nums {
-		curtarget := target - num
-		v, ok := m[curtarget]
-		if ok {
-			return []int{v, i}
-		}
-		m[num] = i
-
+func oldestBook(books []Book) (Book, error) {
+	if len(books) == 0 {
+		return Book{}, errors.New("пустой слайс")
 	}
-	return nil
+	oldest_i, oldest := 0, books[0].Year
+	for i, book := range books {
+		if book.Year < oldest {
+			oldest = book.Year
+			oldest_i = i
+		}
+	}
+	return books[oldest_i], nil
+}
+
+func totalPages(books []Book) int {
+	total := 0
+	for _, book := range books {
+		total += book.Pages
+	}
+	return total
+}
+
+func booksByAuthor(books []Book) map[string]int {
+	m := make(map[string]int)
+	for _, book := range books {
+		m[book.Author]++
+	}
+	return m
 }
 
 func main() {}
